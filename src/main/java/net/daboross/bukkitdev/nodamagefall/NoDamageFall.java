@@ -16,9 +16,14 @@
  */
 package net.daboross.bukkitdev.nodamagefall;
 
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -28,22 +33,30 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class NoDamageFall extends JavaPlugin implements Listener {
 
-    @Override
-    public void onEnable() {
-        PluginManager pm = getServer().getPluginManager();
-        pm.registerEvents(this, this);
-    }
+	@Override
+	public void onEnable() {
+		PluginManager pm = getServer().getPluginManager();
+		pm.registerEvents(this, this);
+	}
 
-    @Override
-    public void onDisable() {
-    }
+	@Override
+	public void onDisable() {
+	}
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("")) {
-        } else {
-            sender.sendMessage("NoDamageFall doesn't know about the command /" + cmd);
-        }
-        return true;
-    }
+	@Override
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		sender.sendMessage("NoDamageFall doesn't know about the command /" + cmd);
+		return true;
+	}
+
+	@EventHandler
+	public void onFall(EntityDamageEvent ede) {
+		if (ede.getEntity() instanceof Player && ede.getCause() == EntityDamageEvent.DamageCause.FALL) {
+			Entity e = ede.getEntity();
+			if (e.getLocation().getBlock().getType() == Material.SNOW_BLOCK
+					&& e.getLocation().getY() > 70) {
+				ede.setCancelled(true);
+			}
+		}
+	}
 }
