@@ -1,0 +1,5 @@
+name: NoDamageFall
+main: net.daboross.bukkitdev.nodamagefall.NoDamageFall
+version: 1.0
+author: Dabo Ross
+description: No fall damage
