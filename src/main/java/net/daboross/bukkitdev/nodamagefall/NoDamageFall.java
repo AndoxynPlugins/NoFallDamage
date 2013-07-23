@@ -16,6 +16,7 @@
  */
 package net.daboross.bukkitdev.nodamagefall;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -52,9 +53,8 @@ public class NoDamageFall extends JavaPlugin implements Listener {
 	@EventHandler
 	public void onFall(EntityDamageEvent ede) {
 		if (ede.getEntity() instanceof Player && ede.getCause() == EntityDamageEvent.DamageCause.FALL) {
-			Entity e = ede.getEntity();
-			if (e.getLocation().getBlock().getType() == Material.SNOW_BLOCK
-					&& e.getLocation().getY() > 70) {
+			Location location = ede.getEntity().getLocation();
+			if (location.getY() > 79 && (location.getBlock().getType() == Material.SNOW_BLOCK || location.add(0, -1, 0).getBlock().getType() == Material.SNOW_BLOCK)) {
 				ede.setCancelled(true);
 			}
 		}
