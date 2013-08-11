@@ -1,5 +1,5 @@
-name: NoDamageFall
+name: ${project.name}
 main: net.daboross.bukkitdev.nodamagefall.NoDamageFall
-version: 1.0
+version: ${project.version}
 author: Dabo Ross
 description: No fall damage
